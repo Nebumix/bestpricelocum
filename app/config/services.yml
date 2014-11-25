@@ -1,0 +1,5 @@
+services:
+    acme_pharmacy.form.type.ads:
+        class: Acme\PharmacyBundle\Form\Type\AdsType
+        tags:
+            - { name: form.type, alias: ad }

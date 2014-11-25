@@ -1,0 +1,85 @@
+parameters:
+    nebumix_rtvalidation.check.class: Nebumix\rtValidationBundle\Controller\CheckController
+    addPharmacy:
+        pharmacy_gphc:
+            NotBlank:
+                message: "Please enter the GPhC registration number."
+            Length:
+                max: 10
+                maxMessage: "No more than 10 char"
+            Regex: 
+                pattern: "/^\d+$/"
+                message: "Please, enter just numbers"
+        pharmacy_name:
+            NotBlank:
+                message: "Field is required."
+            Length:
+                max: 100
+                maxMessage: "No more than 100 char"
+        pharmacy_state:
+            NotBlank:
+                message: "Field is required."
+        pharmacy_country:
+            NotBlank:
+                message: "Field is required."
+        pharmacy_city:
+            NotBlank:
+                message: "Field is required."
+            Length:
+                max: 100
+                maxMessage: "No more than 100 char"
+        pharmacy_postcode:
+            NotBlank:
+                message: "Field is required."
+            Length:
+                max: 10
+                maxMessage: "No more than 10 char"
+            Regex: 
+                pattern: "/^([A-PR-UWYZ0-9][A-HK-Y0-9][AEHMNPRTVXY0-9]?[ABEHMNPRVWXY0-9]? {1,2}[0-9][ABD-HJLN-UW-Z]{2}|GIR 0AA)$/"
+                message: "Please, enter the postcode"
+        pharmacy_address:
+            NotBlank:
+                message: "Field is required."
+            Length:
+                max: 100
+                maxMessage: "No more than 100 char"
+    addAd:
+        pharmacy:
+            NotBlank:
+                message: "Please enter the pharmacy for your ad."
+        roles:
+            NotBlank:
+                message: "Please enter the role you are looking for."
+        ad_price:
+            NotBlank:
+                message: "Please enter how much are you offering like daily rate."
+            Length:
+                max: 6
+            Regex: 
+                pattern: "/^\d+(\.\d{1,2})?$/"
+                message: insert money
+        ad_datejob:
+            NotBlank:
+                message: "Please enter the job date."
+            Date:
+        ad_startshift:
+            NotBlank:
+                message: "Please enter the start job hour."
+            #Date:
+        ad_endshift:
+            NotBlank:
+                message: "Please enter the end job hour."
+            #Date:
+        ad_break:
+            NotBlank:
+                message: "Please enter if it will be a break."
+        ad_timebreak:
+            NotBlank:
+                message: "Please enter the time of break."
+            Regex: 
+                pattern: "/^half$|^one$/"
+
+
+
+
+

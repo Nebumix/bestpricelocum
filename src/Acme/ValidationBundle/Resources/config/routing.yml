@@ -1,0 +1,14 @@
+nebumixrt_validation_check:
+    path:     /nebumixrt/validation/check/
+    defaults: { _controller: NebumixrtValidationBundle:Check:checkField }
+    methods:  [POST]
+
+nebumixrt_timebreak_valid:
+    path:     /nebumixrt/validation/timebreak/
+    defaults: { _controller: NebumixrtValidationBundle:Check:isTimebreakValid }
+    methods:  [POST]
+
+nebumixrt_isTimestartend_valid:
+    path:     /nebumixrt/validation/isTimestartend/
+    defaults: { _controller: NebumixrtValidationBundle:Check:isTimestartendValid }
+    methods:  [POST]

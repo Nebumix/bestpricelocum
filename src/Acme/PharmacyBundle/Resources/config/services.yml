@@ -1,0 +1,7 @@
+parameters:
+#    acme_pharmacy.example.class: Acme\PharmacyBundle\Example
+
+services:
+#    acme_pharmacy.example:
+#        class: %acme_pharmacy.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

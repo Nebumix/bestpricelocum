@@ -1,0 +1,132 @@
+{# {% extends '::farmacy.html.twig' %} #}
+{% extends '::base.html.twig' %}
+{##########################################}
+
+{% block title %}Find Health Professionals - Advertisements list{% endblock %}
+
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
+
+	{#{ google_map_css(map) }#}
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+
+
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
+
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+
+
+	<script type="text/javascript">
+		$(function() {
+			$(".too").tooltip({
+			});
+		});
+	</script>
+	
+
+	<script type="text/javascript">
+		
+		  function showmap(id){
+		      //@todo da modificare url_show_map
+		      //url = "show_map/"+ id;
+		      url = Routing.generate('_show_map', {id : id});
+		            $('<div style="width:100%;"><iframe id="externalSite" src="' + url + '" width="600px" frameBorder="0" style="height:500px;" /></div>').dialog(
+		                {
+		        autoResize: true,
+		        minWidth:650,
+		        maxHeight:550,
+		        modal: true,
+		        resizable: true,
+		        title:'Show map'
+		        }
+		            );
+		            //prevent the browser to follow the link
+		  }  
+
+	</script>	
+
+
+
+{% endblock %}
+
+
+{##########################################}
+
+  {% block breadcrumbs %}
+      {#<li><a href="#">Home</a></li>#}
+	  <li class="last-child"><a href="#">Advertisements list</a></li>
+  {% endblock %}
+
+{##########################################}
+
+{% block body %}
+
+	<div style="padding:10px;">	
+
+		{% if check %}
+
+		    <div class="container2">
+				<a class="button" href="{{ path('_add_ad') }}">Add advertisement</a>
+		    </div>
+
+		
+			{% if ads is defined %}
+
+
+			    <div class="container2">
+					<div class="sidebar" style="width: 100%;">
+			            <div class="block">
+			            	<h2>All your active advertisments</h2>
+			            	<div class="archive">
+				                <ul>
+								    {% for ad in ads %}
+								        <li><span>
+							        		{{ ad.id }} - 
+							        		{{ ad.datejob|date('d M Y') }} - 
+						        			{# <a class="too" title="See all offers and ad details." 
+									        	href="{{ path('_Admin_ad_page', {'id': user.idAd}) }}">
+									        	<img src="{{ asset('welcare/images/sico11-normal.png') }}"> 
+									        	({{ user.offers }} Offers)</a> - #}
+									        {{ad.pharmacy.name}} - 
+									        {# In {{ user.dif }} day{% if user.dif == 1 %}s{% endif %} time -  #}
+									        £{{ ad.price }} - 
+									        <a href="javascript:void(0);" onclick="showmap({{ ad.pharmacy.id }});">{{ ad.pharmacy.address }} {{ ad.pharmacy.postcode }}</a>
+
+								        </span></li>
+								    {% endfor %}
+				                </ul>
+			              	</div>
+			            </div>
+			        </div>
+			    </div>
+
+
+
+			    
+			{% else %}
+			    No ads found.
+			{% endif %}
+			
+			
+		{% else %}
+		
+			Bisogna prima creare delle farmacie <a href="{{ path('_Farmacy_list') }}">Crea qui</a>
+		
+		{% endif %}
+	
+	</div>
+
+{% endblock %}

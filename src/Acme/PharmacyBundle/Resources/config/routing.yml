@@ -1,0 +1,46 @@
+
+_Welcome:
+    pattern:  /
+    defaults: { _controller: AcmePharmacyBundle:Pharmacy:index }
+
+_Add_farmacy:
+    pattern:  /panel/farmacy/add/
+    defaults: { _controller: AcmePharmacyBundle:Employer:addFarmacy }
+
+_Save_farmacy:
+    pattern:  /panel/farmacy/save/
+    defaults: { _controller: AcmePharmacyBundle:Employer:saveFarmacy }
+
+_List_farmacies:
+    pattern:  /panel/pharmacies/list/
+    defaults: { _controller: AcmePharmacyBundle:Employer:listFarmacies }
+
+_show_map:
+    pattern:  /panel/show_map/{id}
+    defaults: { _controller: AcmePharmacyBundle:Pharmacy:showmap }
+
+_check_ads:
+    pattern:  /panel/check/ads/{id}
+    defaults: { _controller: AcmePharmacyBundle:Employer:checkAd }
+    methods:  [GET]
+
+_del_farmacy:
+    pattern:  /panel/pharmacy/del/{id}
+    defaults: { _controller: AcmePharmacyBundle:Employer:delPharmacy }
+    methods:  [GET]
+
+_add_ad:
+    pattern:  /panel/ad/add/
+    defaults: { _controller: AcmePharmacyBundle:Employer:addAd }
+
+_save_ad:
+    pattern:  /panel/ad/save/
+    defaults: { _controller: AcmePharmacyBundle:Employer:saveAd }
+
+_list_ads:
+    pattern:  /panel/ads/list/
+    defaults: { _controller: AcmePharmacyBundle:Employer:listAds }
+
+_admin_ad_page:
+    pattern:  /panel/admin/ad/page/{id}
+    defaults: { _controller: AcmePharmacyBundle:Employer:adminAdPage }

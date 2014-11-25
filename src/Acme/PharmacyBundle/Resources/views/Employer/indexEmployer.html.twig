@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+{# extends '::farmacy.html.twig' #}
+
+{% block title %}Find Health Professionals - Employer - Home{% endblock %}
+
+  {% block breadcrumbs %}
+      <li class="last-child"><a>Home</a></li>
+  {% endblock %}
+
+
+
+{% block body %}
+
+<a href="{#{ path('_Welcome') }#}">HOME</a>
+<br>
+<a href="{#{ path('fos_user_security_logout') }#}">Logout</a>
+<br>
+Add your details
+<br>
+<a href="{{ path('_Add_farmacy') }}">Add farmacy shop</a>
+<br>
+<a href="{{ path('_List_farmacies') }}">List farmacies shops</a>
+<br>
+<a href="{{ path('_add_ad') }}">Add new ad</a>
+<br>
+<a href="{{ path('_list_ads') }}">Ads list</a>
+<br>
+
+{% if check == true %}
+
+	<a href="{#{ path('_Ads_list') }#}">See pending ads and insert new ad</a>
+
+{% else %}
+
+	Insert ad Employer
+
+{% endif %}
+
+
+
+
+{% endblock %}

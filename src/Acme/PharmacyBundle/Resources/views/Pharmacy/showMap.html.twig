@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
+
+	{{ google_map_css(map) }}
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
+	
+	{{ google_map_js(map) }}
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+{{ google_map_container(map) }}
+
+{% endblock %}

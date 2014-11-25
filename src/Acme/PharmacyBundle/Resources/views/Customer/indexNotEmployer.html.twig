@@ -1,0 +1,43 @@
+{# extends '::farmacy1.html.twig' #}
+{% extends '::base.html.twig' %}
+
+{% block title %}Find Health Professionals - Locum - Home{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}
+
+
+  {% block breadcrumbs %}
+      <li class="last-child"><a>Home</a></li>
+  {% endblock %}
+
+
+
+{% block body %}
+
+<a href="{{ path('_Welcome') }}">Home</a>
+<a href="{{ path('fos_user_security_logout') }}">Logout</a>
+
+
+Not Employer
+
+<br>
+<a href="{#{ path('_edit_profile') }#}">edit profile</a>
+<br>
+<a href="{#{ path('_add_documents') }#}">Add documents</a>
+<br>
+<a href="{#{ path('_My_offers') }#}">My pending offers ({{ noffers }})</a>
+<br>
+My accepted offers to do ()
+<br>
+My old works ()
+<br>
+My calendar
+<br>
+<a href="{#{ path('_search') }#}">search</a>
+<br>
+feedback
+
+{% endblock %}

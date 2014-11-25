@@ -1,0 +1,376 @@
+{% extends '::base.html.twig' %}
+
+
+
+
+{% block title %}Find Health Professionals - Add advertisement{% endblock %}
+
+
+
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
+
+{% endblock %}      
+
+
+
+
+
+
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
+
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    {% javascripts
+        '@NebumixrtValidationBundle/Resources/public/js/nebumix_r_t_validation.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+	<script type="text/javascript" src="{{ asset('js/jquery-ui-timepicker-addon.js') }}"></script>
+
+	<script type="text/javascript">
+
+
+	    $( "#save_ad" ).click(function() {
+	        var c_idPharmacy = check_field_check('addAd', 'pharmacy');
+	        var c_roles = check_field_check('addAd', 'roles');
+	        var c_price = check_field('addAd', 'ad_price');
+	        var c_datejob = check_field('addAd', 'ad_datejob');
+	        var c_startshift = check_field('addAd', 'ad_startshift');
+	        var c_endshift = check_field('addAd', 'ad_endshift');
+	        /*var c_break = check_field('addAd', 'ad_break');*/
+	        var c_timebreak = check_field('addAd', 'ad_timebreak');
+	        var c_break = check_field_isTimebreakValid('ad_break', 'ad_timebreak');
+	        var c_start_end = check_field_isTimestartend('ad_startshift', 'ad_endshift');
+
+	        if( c_idPharmacy == 1 && c_roles == 1 && c_price == 1 && c_datejob == 1 && c_startshift == 1 && c_endshift == 1 && c_break == 1 && c_start_end )
+	        {
+	            var form_data = $('#myForm').serialize();
+
+	              $.ajax({  
+	                url: Routing.generate('_save_ad'),  
+	                type: "POST",  
+	                data:  form_data,
+	                dataType: "html",
+	                async : false,
+	                success: function(msg) { 
+	                //if the function have no error return 1
+	                        if(msg == 1){
+	                    		alert('Saved');
+	                    		//window.location.replace(Routing.generate('_register_new_broker_approved'));
+	                    	}else if(msg == -1){
+	                    		alert("Address error, impossible to find, please check city, address and postcode.");
+	                        }else{
+						        check_field_check('addAd', 'pharmacy');
+						        check_field_check('addAd', 'roles');
+						        check_field('addAd', 'ad_price');
+						        check_field('addAd', 'ad_datejob');
+						        check_field('addAd', 'ad_startshift');
+						        check_field('addAd', 'ad_endshift');
+						        /*check_field('addAd', 'ad_break');*/
+						        check_field('addAd', 'ad_timebreak');
+						        check_field_isTimebreakValid('ad_break', 'ad_timebreak');
+						        check_field_isTimestartend('ad_startshift', 'ad_endshift');
+	                		}
+	                },
+	                error: function(){
+	                  alert("ERROR!");
+	                } 
+	            }); 
+
+	        }
+	    });
+
+	</script>
+
+
+
+	<script type="text/javascript">
+
+		function check_field_check(name_form, name_field){
+			var res = "";
+
+			$.ajax({  
+		        url: Routing.generate('nebumixrt_validation_check'),  
+		        type: "POST",  
+		        async: false,
+		       /* data: { item : $('#fos_user_registration_form_fname').val(), name : name_field, nameForm : name_form },*/
+				data: { item : $( 'input:radio[name*='+name_field+']:checked' ).val(), name : name_field, nameForm : name_form },
+
+		        dataType: "html",
+		        success: function(msg) { 
+		              //alert(msg);
+		              res = msg;
+
+		              if(msg != 1){
+		              	$('#'+name_field+'_error').html(msg);
+		              }else{
+		              	$('#'+name_field+'_error').html("");
+		              }
+		        },
+		        error: function(){
+		          alert("ERROR!");
+		        } 
+		      }); 	
+
+		      return res;			
+		}
+
+
+	</script>
+
+
+	<script type="text/javascript">
+
+		$(function() {  
+		    $('#ad_idPharmacy').focusout(function() {
+		        check_field_check('addAd', 'pharmacy');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_roles').focusout(function() {
+		        check_field('addAd', 'roles');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_price').focusout(function() {
+		        check_field('addAd', 'ad_price');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_datejob').focusout(function() {
+		        check_field('addAd', 'ad_datejob');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_startshift').focusout(function() {
+		        check_field('addAd', 'ad_startshift');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_endshift').focusout(function() {
+		        check_field('addAd', 'ad_endshift');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_break').focusout(function() {
+		        check_field('addAd', 'ad_break');
+		    });
+		});  
+		$(function() {  
+		    $('#ad_timebreak').focusout(function() {
+		        check_field('addAd', 'ad_timebreak');
+		    });
+		});  
+	</script>
+
+
+
+	<script>
+		$(function() {
+			$( "#ad_datejob" ).datepicker({
+				altField: "#alternate",
+				altFormat: "DD, d MM, yy",
+				minDate: -0,
+    			dateFormat: "yy-mm-dd"			
+			});
+		});
+	</script>
+
+	<script>		
+		$('#ad_startshift').timepicker({
+			stepMinute: 10,
+			hourGrid: 4,
+			minuteGrid: 10
+		});		
+	</script>
+
+
+	<script>
+		$('#ad_endshift').timepicker({
+			stepMinute: 10,
+			hourGrid: 4,
+			minuteGrid: 10
+		});		
+	</script>
+
+{% endblock %}
+
+
+{% block body %}
+
+
+
+	{% if check %}
+	
+	
+
+    <div class="comment_form">
+
+		{{ form_start(form, {'attr': {'id': 'myForm', 'onSubmit': 'return false;'}}) }}
+			<div>
+		    	{{ form_errors(form) }}
+		    <br><br><br><br><hr style="border: 1px dashed #E6E6E6;"><br><br>
+		    </div>
+		
+		    		
+		    <div>
+		    	<h3>Pharmacy:</h3>
+		    	<h6>Choose the pharmacy for your ad.</h6>
+		    	<div id="idPharmacy_error"></div>
+		        {{ form_errors(form.pharmacy) }}
+		        {{ form_widget(form.pharmacy) }}
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Roles:</h3>
+		    	<h6>Select the role for your ad.</h6>
+		    	<div id="roles_error"></div>
+		        {{ form_errors(form.roles) }}
+		        {{ form_widget(form.roles) }}
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Price:</h3>
+		    	<h6>Hourly price (gross)</h6>
+		    	<h6>Use . to decimal</h6>
+		    	<div id="ad_price_error"></div>
+		        {{ form_errors(form.price) }}
+		        {{ form_widget(form.price) }}
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>The job's date:</h3>
+		    	<div id="ad_datejob_error"></div>
+		        {{ form_errors(form.datejob) }}
+		        {{ form_widget(form.datejob) }}
+		        <input type="text" id="alternate" size="30" disabled="true">
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Start shift:</h3>
+		    	<div id="ad_startshift_error"></div>
+		        {{ form_errors(form.startshift) }}
+		        {{ form_widget(form.startshift) }}
+		    </div>		    
+		    <div>
+		    	<h3>End shift:</h3>
+		    	<div id="ad_endshift_error"></div>
+		        {{ form_errors(form.endshift) }}
+		        {{ form_widget(form.endshift) }}
+		    </div>		
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Break:</h3>
+		    	<div id="ad_break_error"></div>
+		        {{ form_errors(form.break) }}
+		        {{ form_widget(form.break) }}
+		    </div>	
+		    <br>	
+		    <div>
+		    	<h3>Time break:</h3>
+		    	<div id="ad_timebreak_error"></div>
+		        {{ form_errors(form.timebreak) }}
+		        {{ form_widget(form.timebreak) }}
+		    </div>	 
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <h3>Extra:</h3>
+		    <div style="height:1.1em;">
+		        {{ form_errors(form.insurance) }}
+		        {{ form_widget(form.insurance) }}
+		        {{ form_label(form.insurance) }}
+		    </div>
+		    <div style="height:1.1em;">
+		        {{ form_errors(form.criminal) }}
+		        {{ form_widget(form.criminal) }}
+		        {{ form_label(form.criminal) }}
+		    </div>
+		    <div style="height:1.1em;">
+		        {{ form_errors(form.boots) }}
+		        {{ form_widget(form.boots) }}
+		        {{ form_label(form.boots) }}
+		    </div>
+		    <div style="height:1.1em;">
+		        {{ form_errors(form.reference) }}
+		        {{ form_widget(form.reference) }}
+		        {{ form_label(form.reference) }}
+		    </div>	
+		    <div style="height:1.1em;">
+		        {{ form_errors(form.addressproof) }}
+		        {{ form_widget(form.addressproof) }}
+		        {{ form_label(form.addressproof) }}
+		    </div>			    			    
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Refound:</h3>
+		    	<h6>Describe what you will be refunded.</h6>
+		        {{ form_errors(form.refound) }}
+		        {{ form_widget(form.refound) }}
+		    </div>	    	
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Car park:</h3>
+		        {{ form_errors(form.carpark) }}
+		        {{ form_widget(form.carpark) }}
+		    </div>	 	
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Operative system:</h3>
+		    	<h6>What is the operative system in the pharmacy?.</h6>
+		        {{ form_errors(form.op) }}
+		        {{ form_widget(form.op) }}
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Staff support</h3>
+		        {{ form_errors(form.support) }}
+		        {{ form_widget(form.support) }}
+		        {{ form_label(form.support) }}
+		    </div>
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Services:</h3>
+		        {{ form_errors(form.services) }}
+		        {{ form_widget(form.services) }}
+		    </div>    		
+		    <br><hr style="border: 1px dashed #E6E6E6;"><br>
+		    <div>
+		    	<h3>Additional info:</h3>
+		        {{ form_errors(form.info) }}
+		        {{ form_widget(form.info) }}
+		    </div>   		        			    			       		
+		    <div>
+		        {#{ form_widget(form.save) }#}
+		        {#<input style="margin-bottom:10px;" type="submit" class="button" value="Save" />#}
+		        <button type="button" id="save_ad" >Save the new ad</button> 
+		    </div>
+		
+		{{ form_end(form) }}
+
+	</div>
+
+
+	{% else %}
+	
+		You must first create a pharmacy <a href="{{ path('_Farmacy_list') }}">here</a>
+	
+	{% endif %}
+
+
+	</div>
+
+
+	</div>
+
+
+
+
+{% endblock %}

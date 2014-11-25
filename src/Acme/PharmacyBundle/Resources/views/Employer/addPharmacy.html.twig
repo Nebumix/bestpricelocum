@@ -1,0 +1,271 @@
+{% extends '::base.html.twig' %}
+
+    {% block title %}Find Health Professionals - Add Pharmacy{% endblock %}
+
+
+
+
+	{% form_theme form _self %}
+	
+
+
+
+
+
+  	{% block breadcrumbs %}			          
+      <li><a href="{{ path('_Farmacy_list') }}">Pharmacy list</a></li>
+      <li class="last-child"><a href="#">Add pharmacy</a></li>
+  	{% endblock %}
+
+
+
+
+{% block stylesheets %}
+
+
+
+{% endblock %}      
+
+
+
+
+
+{% block javascripts %}
+
+
+<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+<script type="text/javascript" src="{{ asset('bundles/nebumixrtvalidation/js/nebumix_r_t_validation.js') }}"></script>
+
+
+	<script type="text/javascript">
+		function checkNumb() {
+			
+				  $.ajax({  
+				    url: '../add_farmacy_gphc/' + $('#form_gphc').val(),  
+				    type: "GET",  
+				    dataType: "html",
+				    success: function(msg) { 
+/*alert(msg);*/
+						var res = msg.split("::");
+						
+						if(res[0] == -1){
+							alert(res[1]);
+						}
+						
+						if(res[0] == 0){
+							alert('Sorry, no matches found.\nPlease, check the number entered.\nFor problem, please contact us.');
+						}
+						
+						if(res[0] == 1){
+							$('#form_gphc').attr("disabled", true);
+							$('#form_gphc').attr("readonly", true);
+							$('#check_number').hide();
+							$('.info_form').show('blind');
+
+							$('#form_name').val(res[1]);
+							var dat = res[3].split(",");
+							$('#form_postcode').val(dat[dat.length - 2]);
+						}					
+				      
+				    },
+				    error: function(){
+				      alert("ERROR!");
+				    } 
+				  }); 			
+		}
+	</script>
+
+
+
+
+
+	<script type="text/javascript">
+
+
+	    $( "#save_pharmacy" ).click(function() {
+
+	        var c_gphc = check_field_full_name('addPharmacy', 'pharmacy_gphc');
+	        var c_name = check_field_full_name('addPharmacy', 'pharmacy_name');
+	        var c_state = check_field_full_name('addPharmacy', 'pharmacy_state');
+	        var c_country = check_field_full_name('addPharmacy', 'pharmacy_country');
+	        var c_city = check_field_full_name('addPharmacy', 'pharmacy_city');
+	        var c_postcode = check_field_full_name('addPharmacy', 'pharmacy_postcode');
+	        var c_address = check_field_full_name('addPharmacy', 'pharmacy_address');
+
+	        if( c_gphc == 1 && c_name == 1 && c_state == 1 && c_country == 1 && c_city == 1 && c_postcode == 1 && c_address == 1 )
+	        {
+	            var form_data = $('#myForm').serialize();
+
+	              $.ajax({  
+	                url: Routing.generate('_Save_farmacy'),  
+	                type: "POST",  
+	                data:  form_data,
+	                dataType: "html",
+	                async : false,
+	                success: function(msg) { 
+	                //if the function have no error return 1
+	                        if(msg == 1){
+	                    		alert('Saved');
+	                    		//window.location.replace(Routing.generate('_register_new_broker_approved'));
+	                    	}else if(msg == -1){
+	                    		alert("Address error, impossible to find, please check city, address and postcode.");
+	                        }else{
+						        check_field_full_name('addPharmacy', 'pharmacy_gphc');
+						        check_field_full_name('addPharmacy', 'pharmacy_name');
+						        check_field_full_name('addPharmacy', 'pharmacy_state');
+						        check_field_full_name('addPharmacy', 'pharmacy_country');
+						        check_field_full_name('addPharmacy', 'pharmacy_city');
+						        check_field_full_name('addPharmacy', 'pharmacy_postcode');
+						        check_field_full_name('addPharmacy', 'pharmacy_address');
+	                		}
+	                },
+	                error: function(){
+	                  alert("ERROR!");
+	                } 
+	            }); 
+
+	        }
+	    });
+
+	</script>
+
+
+	<script type="text/javascript">
+
+		$(function() {  
+		    $('#pharmacy_gphc').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_gphc');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_name').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_name');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_state').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_state');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_country').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_country');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_city').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_city');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_postcode').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_postcode');
+		    });
+		});  
+		$(function() {  
+		    $('#pharmacy_address').focusout(function() {
+		        check_field_full_name('addPharmacy', 'pharmacy_address');
+		    });
+		});  
+	</script>
+
+
+
+
+
+
+
+{% endblock %}   
+
+
+
+
+{% block body %}
+
+
+	
+	<div class="boxBody">		
+	
+	<div style="padding:40px;">
+	
+		<h1 style="font-size: 28px;">
+			<span class="gray thin">Add new </span>
+			<span class="blue thick">pharmacy </span>
+			<span class="gray thin">shop</span>
+		</h1>	
+	
+
+
+	<br>
+
+
+    <div class="comment_form">
+        
+
+		<div id="pharmacy_gphc_error"></div>
+		<div id="pharmacy_name_error"></div>
+		<div id="pharmacy_state_error"></div>
+		<div id="pharmacy_country_error"></div>
+		<div id="pharmacy_city_error"></div>
+		<div id="pharmacy_postcode_error"></div>
+		<div id="pharmacy_address_error"></div>
+
+
+
+		{#{ form(form, {'attr': {'id': 'myForm'}}) }#}
+
+
+
+		{{ form_start(form, {'attr': {'id': 'myForm', 'onSubmit': 'return false;'}}) }}
+		    {{ form_errors(form) }}
+
+		    GPHC
+			{{ form_widget(form.gphc) }}
+			<div id="pharmacy_gphc_error"></div>
+			<br>
+			Name
+			{{ form_widget(form.name) }}
+			<div id="pharmacy_name_error"></div>
+			<br>
+			State
+			{{ form_widget(form.state) }}
+			<div id="pharmacy_state_error"></div>
+			<br>
+			Country
+			{{ form_widget(form.country) }}
+			<div id="pharmacy_country_error"></div>
+			<br>
+			City
+			{{ form_widget(form.city) }}
+			<div id="pharmacy_city_error"></div>
+			<br>
+			Postcode
+			{{ form_widget(form.postcode) }}
+			<div id="pharmacy_postcode_error"></div>
+			<br>
+			Address
+			{{ form_widget(form.address) }}
+			<div id="pharmacy_address_error"></div>			
+			<br>
+		{{ form_end(form) }}
+		
+		    <div class="info_form">
+		        {#{ form_widget(form.save) }#}
+		        {#<input style="margin-bottom:10px;" type="submit" class="button" value="Save" />#}
+		         <button type="button" id="save_pharmacy" >Save the new pharmacy</button> 
+		    </div>
+
+
+	</div>
+
+	</div>
+
+
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,104 @@
+
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
+
+	{#{ google_map_css(map) }#}
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js') }}"></script>
+	
+	{#{ google_map_js(map) }#}
+
+
+
+	<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+	<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+
+
+	<script type="text/javascript">
+		function del(id) {
+			if(confirm('Are you sure to delete the shop?')){
+			
+				  $.ajax({  
+				    /*url: 'check_ad/' + id,  */
+				    url: Routing.generate('_check_ads', {id : id}),
+				    type: "GET",  
+				    dataType: "html",
+				    success: function(msg) { 
+				    
+				    	
+				    	if(msg == 1){
+				    		/*$(window.location).attr('href', '../../farmacy/del/' + id);*/
+				    		$(window.location).attr('href', Routing.generate('_del_farmacy', {id : id}) );
+				    	}else{
+				    		alert("It is not possible to delete this shop, there is an ad connected to this shop");
+				    	}
+				      
+				    },
+				    error: function(){
+				      alert("ERROR!");
+				    } 
+				  }); 			
+			
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		
+		  function showmap(id){
+		      //@todo da modificare url_show_map
+		      //url = "show_map/"+ id;
+		      url = Routing.generate('_show_map', {id : id});
+		            $('<div style="width:100%;"><iframe id="externalSite" src="' + url + '" width="600px" frameBorder="0" style="height:500px;" /></div>').dialog(
+		                {
+		        autoResize: true,
+		        minWidth:650,
+		        maxHeight:550,
+		        modal: true,
+		        resizable: true,
+		        title:'Show map'
+		        }
+		            );
+		            //prevent the browser to follow the link
+		  }  
+
+	</script>	
+
+
+
+{% endblock %}
+
+
+
+
+{% block body %}
+
+	{% if pharmacies is defined %}
+
+		<h1>List</h1>
+		<ul>
+		    {% for pharmacy in pharmacies %}
+		        <li>{{ pharmacy.name }} <a href="javascript:;" onclick="showmap('{{ pharmacy.id }}')">check</a>  <a href="javascript:;" onclick="del('{{ pharmacy.id }}')">del</a> </li>
+		    {% endfor %}
+		</ul>
+
+	{% else %}
+
+		No pharmaces found.
+
+	{% endif %}
+
+{% endblock %}
