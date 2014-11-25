@@ -19,40 +19,7 @@ use Acme\PharmacyBundle\Form\Type\AdsType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Acme\PharmacyBundle\Entity\Ads;
-/*use Acme\FarmacyBundle\Entity\Customer;
-use Acme\FarmacyBundle\Entity\Document;
-use Acme\FarmacyBundle\Entity\Offers;
-use Acme\FarmacyBundle\Entity\Contracts;
-use Acme\FarmacyBundle\Entity\Feedbacktotalpharmacy;
-use Acme\FarmacyBundle\Entity\Feedbacktotal;
-use Acme\FarmacyBundle\Entity\Feedbackpharmacy;
-use Acme\FarmacyBundle\Entity\Feedback;
-use Acme\FarmacyBundle\Entity\NumberGPhC;
 
-
-
-
-use Ivory\GoogleMap\Map;
-use Ivory\GoogleMap\MapTypeId;
-use Ivory\GoogleMap\Overlays\Animation;
-use Ivory\GoogleMap\Overlays\Marker;
-use Ivory\GoogleMap\Overlays\InfoWindow;
-use Ivory\GoogleMap\Events\MouseEvent;
-use Ivory\GoogleMap\Controls\ControlPosition;
-use Ivory\GoogleMap\Controls\MapTypeControl;
-use Ivory\GoogleMap\Controls\MapTypeControlStyle;
-use Ivory\GoogleMap\Controls\PanControl;
-use Ivory\GoogleMap\Controls\ScaleControl;
-use Ivory\GoogleMap\Controls\ScaleControlStyle;
-use Ivory\GoogleMap\Controls\StreetViewControl;
-use Ivory\GoogleMap\Controls\ZoomControl;
-use Ivory\GoogleMap\Controls\ZoomControlStyle;
-
-use Doctrine\ORM\Query\ResultSetMapping;
-
-use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;*/
 
 class EmployerController extends PharmacyController
 {
