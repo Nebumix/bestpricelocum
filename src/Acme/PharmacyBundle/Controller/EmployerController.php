@@ -88,15 +88,11 @@ class EmployerController extends PharmacyController
 
     public function saveFarmacyAction(Request $request)
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
-		
         $pharmacy = new Pharmacy();
         /*$pharmacy->setState(1);
         $pharmacy->setCountry(1);		*/
 
-		$form = $this->createForm(new PharmacyType(), $pharmacy);
+	    $form = $this->createForm(new PharmacyType(), $pharmacy);
 
 	    $form->handleRequest($request);
 	
@@ -148,9 +144,6 @@ class EmployerController extends PharmacyController
 
     public function checkAdAction($id)
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
 
 		$repository = $this->getDoctrine()
 		    ->getRepository('AcmePharmacyBundle:Ads');
@@ -168,10 +161,7 @@ class EmployerController extends PharmacyController
 
     public function delPharmacyAction($id)
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
-    	
+
 	    $em = $this->getDoctrine()->getManager();
 	    $pharmacy = $em->getRepository('AcmePharmacyBundle:Pharmacy')->find($id);			
 		
@@ -187,9 +177,6 @@ class EmployerController extends PharmacyController
 
     public function addAdAction(Request $request)
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
     	
     	$check = $this->checkFarmacyAction();
 		//FARE QUALCOSA CON QUESTO CONTROLLO
@@ -199,7 +186,6 @@ class EmployerController extends PharmacyController
 		//echo date("Y-m-d H:i:s");
 
         $ad = new Ads();
-        //$farmacy->setUser($this->getUser());
 		$ad->setDateinsert(new \DateTime('now'));
 		$ad->setActive(1);
 		$ad->setPublished(0);
@@ -228,10 +214,7 @@ class EmployerController extends PharmacyController
 
     public function saveAdAction(Request $request)
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
-		
+
         $ad = new Ads();
 		$ad->setDateinsert(new \DateTime('now'));
 		$ad->setActive(1);
@@ -267,9 +250,6 @@ class EmployerController extends PharmacyController
 	 */
     public function listAdsAction()
     {
-    	/*if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
 
     	if(!$check = $this->checkFarmacyAction()){
 			return $this->render('AcmePharmacyBundle:Employer:adsList.html.twig', 
@@ -309,121 +289,17 @@ class EmployerController extends PharmacyController
 	 */
     public function adminAdPageAction($id)
     {
-/*    	if($this->checkEmployerAction()){
-			return $this->redirect($this->generateUrl('_Welcome'));
-    	}*/
-		
+
 	    $ad = $this->getDoctrine()
 	        ->getRepository('AcmePharmacyBundle:Ads')
 	        ->findOneBy(array('id' => $id, 'idUser' => $this->getUser()->getId()));
-
-
-/*
-		$em = $this->getDoctrine()->getManager();
-
-		$query = $em->createQuery(
-		    'SELECT a, f, c, s
-		    FROM AcmeFarmacyBundle:Ads a, 
-		    AcmeFarmacyBundle:Farmacy f, 
-		    AcmeFarmacyBundle:Countries c, 
-		    AcmeFarmacyBundle:States s
-			WHERE a.idfarmacy = f.id
-		    AND a.idowner = :idowner
-		    AND a.id = :ida
-		    AND f.state = s.id
-		    AND f.country = c.id'
-		)->setParameter('ida', $id)
-		->setParameter('idowner', $this->getUser()->getId());
-		
-		$ad = $query->getResult();*/
 
 	    if (!$ad) {
 			return $this->render('AcmePharmacyBundle:Employer:adminAdPage.html.twig');			
 		}
 
 
-
-/*
-		$em = $this->getDoctrine()->getManager();
-
-		$query = $em->createQuery(
-		    'SELECT o, co, c, f
-		    FROM AcmeFarmacyBundle:Ads a, 
-		    AcmeFarmacyBundle:Offers o, AcmeFarmacyBundle:Contracts co, 
-		    AcmeFarmacyBundle:Customer c LEFT OUTER JOIN AcmeFarmacyBundle:Feedbacktotal f 
-			 WITH c.id = f.idcustomer 
-			WHERE a.id = o.idad
-		    AND a.idowner = :idowner AND c.id = o.idowner
-		    AND co.idad = a.id AND co.idoffer = o.id
-		    AND a.id = :ida'
-		)->setParameter('ida', $id)
-		->setParameter('idowner', $this->getUser()->getId());
-		
-		$contract = $query->getResult();
-
-	    if ($contract) {
-	    	
-	    	$n = $contract[3]->getStars();
-			$intero = (int)$n;
-			$resto = $n-$intero;
-			if($resto <= 0.5){
-				$nn = floor($n);
-			}else{
-				$nn = ceil($n);		
-			}
-			$contract[3]->setStars($nn);
-			
-			$per = (100*$contract[3]->getNfeedbackpos())/$contract[3]->getNfeedback();
-			$contract[3]->setNfeedbackpos($per);			
-
-			return $this->render('AcmeFarmacyBundle:Employer:adminadpage.html.twig', array(
-	    		'contract' => $contract, 'ad' => $ad
-			));	
-		}		*/
-
-/*		$em = $this->getDoctrine()->getManager();
-				
-		$query = $em->createQuery(
-		    'SELECT c.id as idc, c.fname, c.sname, o.id as ido, o.price, o.stato, o.reply, 
-		    f.nfeedback, f.nfeedbackpos, f.stars
-		    FROM AcmeFarmacyBundle:Offers o, 
-		    AcmeFarmacyBundle:Customer c LEFT OUTER JOIN AcmeFarmacyBundle:Feedbacktotal f 
-			 WITH c.id = f.idcustomer 
-			WHERE o.idowner = c.id AND o.idad = :idad ORDER BY o.reply asc'
-		)->setParameter('idad', $id);
-
-
-		$offers = $query->getResult();	
-
-		for($i = 0; $i < count($offers); $i++){
-	    	$n = $offers[$i]['stars'];
-			$intero = (int)$n;
-			$resto = $n-$intero;
-			if($resto <= 0.5){
-				$nn = floor($n);
-			}else{
-				$nn = ceil($n);		
-			}
-			$offers[$i]['stars'] = $nn;
-			
-			
-			$per = (100*$offers[$i]['nfeedbackpos'])/$offers[$i]['nfeedback'];
-			$offers[$i]['nfeedbackpos'] = $per;
-
-		}*/
-
-/*	    if (!$offers) {
-			return $this->render('AcmeFarmacyBundle:Employer:adminadpage.html.twig', array(
-	    		'ad' => $ad
-			)); 
-		}
-
-		return $this->render('AcmeFarmacyBundle:Employer:adminadpage.html.twig', array(
-    		'offers' => $offers, 'ad' => $ad
-		));    */	
-
-
-			return $this->render('AcmePharmacyBundle:Employer:adminAdPage.html.twig', array(
+		return $this->render('AcmePharmacyBundle:Employer:adminAdPage.html.twig', array(
 	    		'ad' => $ad
 			)); 
 	}
