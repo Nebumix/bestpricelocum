@@ -19,8 +19,8 @@ class CheckController extends BaseController
 
     public function isTimebreakValidAction(Request $request)
     {
-		$break = $request->request->get('item');
-		$timebreak = $request->request->get('item1');
+	$break = $request->request->get('item');
+	$timebreak = $request->request->get('item1');
 
     	if($break == 1){
     					
